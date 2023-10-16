@@ -3,6 +3,7 @@
 O projeto tem por proposta a leitura do pH e temperatura do meio liquido.
 
 
+ ![Display LCD I2C](https://github.com/Gabriel-pagnan/IoT_project/assets/102375991/88064aeb-cd5b-4368-b60d-06966cd621a5)
 
 
 ## Stack utilizada 💻
