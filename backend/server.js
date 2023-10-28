@@ -1,8 +1,8 @@
 const Hapi = require('@hapi/hapi');
-const Insert = require('@hapi/insert');
+const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
 const routes = require('./config/routes.js');
-const swaggerPlugin = require('hapi-swagger');
+const HapiSwagger = require('hapi-swagger');
 const config = require('./config/env-config.js');
 
 const server = Hapi.server({
@@ -11,7 +11,7 @@ const server = Hapi.server({
 });
 
 const swaggerPlugin = [
-    Insert,
+    Inert,
     Vision,
     {
         plugin: HapiSwagger,
@@ -20,7 +20,7 @@ const swaggerPlugin = [
             schemas: ['https', 'https'],
             info: {
                 title: "Api Arduino",
-                version: 1.0
+                version: '1.0.0'
             }
         }
     }
