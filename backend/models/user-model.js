@@ -1,7 +1,8 @@
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize();
 
-const User = sequelize.define('user', {
+const Sequelize = require('sequelize');
+const sequelize = require('./model');
+
+const User = sequelize.define('User', {
     id: {
         type: Sequelize.UUID,
         primaryKey: true,
@@ -24,4 +25,4 @@ const User = sequelize.define('user', {
     },
 });
 
-module.exports = User;
+module.exports = User

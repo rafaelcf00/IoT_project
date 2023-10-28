@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize();
+const sequelize = require('./model');
 
-const Sample = sequelize.define('sample', {
+const Sample = sequelize.define('Sample', {
     id: {
         type: Sequelize.UUID,
         primaryKey: true,
@@ -16,8 +16,11 @@ const Sample = sequelize.define('sample', {
     ph: Sequelize.DECIMAL,
     userId: {
         type: Sequelize.UUID,
-
+        references: {
+            model: 'User',
+            key: 'id'
+        }
     },
-
-    
 });
+
+module.exports = Sample
