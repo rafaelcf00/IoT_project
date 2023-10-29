@@ -9,9 +9,6 @@ const postSample = {
     }).required()
 };
 
-const putSample = {...putSample};
-
 module.exports = {
-    putSample,
     postSample,
 }

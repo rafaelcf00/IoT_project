@@ -17,13 +17,13 @@ const swaggerPlugin = [
         plugin: HapiSwagger,
         options: {
             documentationPath: '/docs',
-            schemas: ['https', 'https'],
             info: {
                 title: "Api Arduino",
                 version: '1.0.0'
-            }
+            },
+            schemes: ['http','https']
         }
-    }
+    },
 ]
 
 const plugins = [

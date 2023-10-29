@@ -41,7 +41,7 @@ const plugin = {
                 options: {
                     tags: ['api'],
                     description: 'delete a user',
-                    handler: controller.delete,
+                    handler: controller.destroy,
                 }
             }
         ])

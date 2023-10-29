@@ -1,0 +1,19 @@
+const find = () => {
+    return console.log('ola');
+}
+const create = () => {
+    return console.log('ola');
+}
+const update = () => {
+    return console.log('ola');
+}
+const destroy = () => {
+    return console.log('ola');
+}
+
+module.exports = {
+    find,
+    create,
+    update,
+    destroy
+}
