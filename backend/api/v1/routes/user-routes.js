@@ -12,7 +12,16 @@ const plugin = {
                 options: {
                     tags: ['api'],
                     description: 'find all users',
-                    handler: controller.find,
+                    handler: controller.findAll,
+                }
+            },
+            {
+                method: 'GET',
+                path: '/users/{id}',
+                options: {
+                    tags: ['api'],
+                    description: 'find one user',
+                    handler: controller.findOne,
                 }
             },
             {
@@ -27,7 +36,7 @@ const plugin = {
             },
             {
                 method: 'PUT',
-                path: '/users',
+                path: '/users/{id}',
                 options: {
                     tags: ['api'],
                     description: 'update a user',
@@ -37,7 +46,7 @@ const plugin = {
             },
             {
                 method: 'DELETE',
-                path: '/users',
+                path: '/users/{id}',
                 options: {
                     tags: ['api'],
                     description: 'delete a user',
