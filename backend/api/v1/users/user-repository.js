@@ -1,9 +1,9 @@
-const { users, Sequelize } = require('../../../models/index');
+const { User, Sequelize } = require('../../../models/index');
 const Op = Sequelize.Op;
 
 const findAllUser = async () => {
     try {
-        const data = await users.findAll()
+        const data = await User.findAll()
 
         return data;
     } catch (error) {
@@ -13,7 +13,7 @@ const findAllUser = async () => {
 
 const findOneUser = async (id) => {
     try {
-        const data = await users.findOne({
+        const data = await User.findOne({
             where: {
                 id: id
             }
@@ -26,7 +26,7 @@ const findOneUser = async (id) => {
 
 const createUser = async (user) => {
     try {
-        const data = await users.create(user);
+        const data = await User.create(user);
         return data;
     } catch (error) {
         throw new Error(error)
@@ -35,7 +35,7 @@ const createUser = async (user) => {
 
 const updateUser = async (id, user) => {
     try {
-        await users.update({...user}, {
+        await User.update({...user}, {
             where: {
                 id: id
             }
@@ -49,7 +49,7 @@ const updateUser = async (id, user) => {
 
 const deleteUser = async (id) => {
     try {
-        await users.destroy({
+        await User.destroy({
             where: {
                 id: id
             }

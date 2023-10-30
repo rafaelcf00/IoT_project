@@ -24,7 +24,7 @@ const swaggerPlugin = [
             schemes: ['http','https']
         }
     },
-]
+];
 
 const plugins = [
     {

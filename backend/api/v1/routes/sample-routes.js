@@ -12,7 +12,16 @@ const plugin = {
                 options: {
                     tags: ['api'],
                     description: 'find all samples',
-                    handler: controller.find,
+                    handler: controller.findAll,
+                }
+            },
+            {
+                method: 'GET',
+                path: '/samples/{id}',
+                options: {
+                    tags: ['api'],
+                    description: 'find one sample',
+                    handler: controller.findOne,
                 }
             },
             {
@@ -22,7 +31,7 @@ const plugin = {
                     tags: ['api'],
                     description: 'create a sample',
                     handler: controller.create,
-                    validate: schema.postSample,
+                    // validate: schema.postSample,
                 }
             },
         ])
