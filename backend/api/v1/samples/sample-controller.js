@@ -21,13 +21,17 @@ const findAll = async (_, h) => {
 
 const create = async (request, h) => {
     const data = request.payload;
-    console.log(data);
-    const userId = 4;
+    const { id } = request.params
+    let teste = {
+        ...data,
+        userId: parseInt(id)
+    }
+    console.log(teste);
     try {
-        const sample = await business.create(data);
+        const sample = await business.create(teste);
         return h.response(sample).code(201)
     } catch (error) {
-        throw new Error(error);
+        return h.response(error).code(500)
     }
 }
 

@@ -26,7 +26,7 @@ const plugin = {
             },
             {
                 method: 'POST',
-                path: '/samples',
+                path: '/samples/{id}',
                 options: {
                     tags: ['api'],
                     description: 'create a sample',
