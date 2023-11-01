@@ -21,7 +21,7 @@ const allEnv = {
     host: process.env.HOST,
     port: process.env.PORT || 8080,
     jwt: {
-        enable: process.env.JWT_ENABLE || true,
+        enable: process.env.JWT_ENABLE,
         secret: process.env.JWT_SECRET || '*2f,DH03%M1q',
     },
     db_name: process.env.DB_NAME,

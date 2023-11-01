@@ -25,11 +25,6 @@ const findAllSample = async () => {
 }
 
 const createSample = async (data) => {
-    // const sample = {
-    //     userId: userId,
-    //     ...data
-    // }
-
     try {
         const sampleData = await Sample.create(data);
         return sampleData;

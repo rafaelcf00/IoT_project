@@ -5,7 +5,7 @@ const findAll = async (_, h) => {
         const result = await business.findAll();
         return h.response(result).code(200);
     } catch (error) {
-        throw new Error(error);
+        return h.response(error).code(500);
     }
 }
 
@@ -15,7 +15,7 @@ const findOne = async (request, h) => {
         const result = await business.findOne(parseInt(id));
         return h.response(result).code(200);
     } catch (error) {
-        throw new Error(error);
+        return h.response(error).code(500);
     }
 }
 
@@ -25,7 +25,7 @@ const create = async (request, h) => {
         const user = await business.create(data);
         return h.response(user).code(201)
     } catch (error) {
-        throw new Error(error);
+        return h.response(error).code(500);
     }
 }
 const update = async (request, h) => {

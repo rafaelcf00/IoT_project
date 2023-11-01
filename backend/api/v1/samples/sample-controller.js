@@ -6,7 +6,7 @@ const findOne = async (request, h) => {
         const result = await business.findOne(parseInt(id));
         return h.response(result).code(200);
     } catch (error) {
-        throw new Error(error)
+        return h.response(error).code(500);
     }
 }
 
@@ -15,21 +15,20 @@ const findAll = async (_, h) => {
         const result = await business.findAll();
         return h.response(result).code(200);
     } catch (error) {
-        throw new Error(error);
+        return h.response(error).code(500);
     }
 }
 
 const create = async (request, h) => {
     const data = request.payload;
-    const { id } = request.params
-    let teste = {
+    const { id } = request.params;
+    let sample = {
         ...data,
         userId: parseInt(id)
     }
-    console.log(teste);
     try {
-        const sample = await business.create(teste);
-        return h.response(sample).code(201)
+        const res = await business.create(sample);
+        return h.response(res).code(201)
     } catch (error) {
         return h.response(error).code(500)
     }
