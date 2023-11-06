@@ -10,6 +10,7 @@ const plugin = {
                 method: 'GET',
                 path: '/users',
                 options: {
+                    auth: 'jwt',
                     tags: ['api'],
                     description: 'find all users',
                     handler: controller.findAll,
@@ -19,6 +20,7 @@ const plugin = {
                 method: 'GET',
                 path: '/users/{id}',
                 options: {
+                    auth: 'jwt',
                     tags: ['api'],
                     description: 'find one user',
                     handler: controller.findOne,
@@ -28,6 +30,7 @@ const plugin = {
                 method: 'POST',
                 path: '/users',
                 options: {
+                    auth: 'jwt',
                     tags: ['api'],
                     description: 'create a user',
                     handler: controller.create,
@@ -38,6 +41,7 @@ const plugin = {
                 method: 'PUT',
                 path: '/users/{id}',
                 options: {
+                    auth: 'jwt',
                     tags: ['api'],
                     description: 'update a user',
                     handler: controller.update,
@@ -48,6 +52,7 @@ const plugin = {
                 method: 'DELETE',
                 path: '/users/{id}',
                 options: {
+                    auth: 'jwt',
                     tags: ['api'],
                     description: 'delete a user',
                     handler: controller.destroy,

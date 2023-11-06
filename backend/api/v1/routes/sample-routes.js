@@ -10,6 +10,7 @@ const plugin = {
                 method: 'GET',
                 path: '/samples',
                 options: {
+                    auth: 'jwt',
                     tags: ['api'],
                     description: 'find all samples',
                     handler: controller.findAll,
@@ -19,6 +20,7 @@ const plugin = {
                 method: 'GET',
                 path: '/samples/{id}',
                 options: {
+                    auth: 'jwt',
                     tags: ['api'],
                     description: 'find one sample',
                     handler: controller.findOne,
@@ -28,6 +30,7 @@ const plugin = {
                 method: 'POST',
                 path: '/samples/{id}',
                 options: {
+                    auth: 'jwt',
                     tags: ['api'],
                     description: 'create a sample',
                     handler: controller.create,

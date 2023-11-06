@@ -51,7 +51,7 @@ const plugins = [
 
 const validate = async (decoded, request, h) => {
     return {
-        isValid: true
+        isValid: true, credencials: decoded,
     }
 }
 
@@ -61,8 +61,6 @@ if (config.jwt.enable === 'true') {
         key: config.jwt.secret,
         validate
     });
-
-    server.auth.default('jwt');
 }
 
 plugins.push(...swaggerPlugin);
