@@ -1,18 +1,18 @@
 const business = require('./user-business');
 
-const findAll = async (_, h) => {
+const findOne = async (request, h) => {
+    const { id } = request.params;
     try {
-        const result = await business.findAll();
+        const result = await business.findOne(parseInt(id));
         return h.response(result).code(200);
     } catch (error) {
         return h.response(error).code(500);
     }
 }
 
-const findOne = async (request, h) => {
-    const { id } = request.params;
+const findAll = async (_, h) => {
     try {
-        const result = await business.findOne(parseInt(id));
+        const result = await business.findAll();
         return h.response(result).code(200);
     } catch (error) {
         return h.response(error).code(500);

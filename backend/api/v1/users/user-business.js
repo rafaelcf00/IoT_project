@@ -1,11 +1,11 @@
 const userRepository = require('./user-repository');
 
-const findAll = async () => {
-    return userRepository.findAllUser();
-};
-
 const findOne = async (id) => {
     return userRepository.findOneUser(id);
+};
+
+const findAll = async () => {
+    return userRepository.findAllUser();
 };
 
 const create = async (user) => {

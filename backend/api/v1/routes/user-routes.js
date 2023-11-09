@@ -20,7 +20,6 @@ const plugin = {
                 method: 'GET',
                 path: '/users/{id}',
                 options: {
-                    auth: 'jwt',
                     tags: ['api'],
                     description: 'find one user',
                     handler: controller.findOne,

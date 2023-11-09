@@ -1,28 +1,27 @@
 const { User, Sequelize } = require('../../../models/index');
 const Op = Sequelize.Op;
 
-const findAllUser = async () => {
+const findOneUser = async (id) => {
     try {
-        const data = await User.findAll()
-
-        return data;
+        const user = await User.findOne({
+            where: {
+                id: id
+            },
+        })
+        return user;
     } catch (error) {
         throw new Error(error);
     }
 };
 
-const findOneUser = async (id) => {
+const findAllUser = async () => {
     try {
-        const data = await User.findOne({
-            where: {
-                id: id
-            }
-        })
+        const data = await User.findAll()
         return data;
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 const createUser = async (user) => {
     try {
