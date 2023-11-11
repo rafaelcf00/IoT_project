@@ -29,19 +29,16 @@ const findUser = async (email) => {
 const login = async (email, password) => {
     const { dataValues } = await findUser(email);
     const secret = config.jwt.secret;
-
     try {
         if (!dataValues) {
             console.log('Missing authentication');
         }
-        if (password === dataValues.password) {
-            const token = tokenGenerator(secret);
-            return {
-                ...dataValues,
-                token: token
-            }
+        await bcrypt.compare(password, dataValues.password)
+        const token = tokenGenerator(secret);
+        return {
+            ...dataValues,
+            token: token
         }
-
     } catch (error) {
         throw new Error(error);
     }

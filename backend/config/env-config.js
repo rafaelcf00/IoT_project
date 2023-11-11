@@ -25,10 +25,10 @@ const allEnv = {
         secret: process.env.JWT_SECRET || '*2f,DH03%M1q',
     },
     db_name: process.env.DB_NAME,
-    db_user: process.env.DB_USER || "root",
+    db_user: process.env.DB_USER || "postgres",
     db_host: process.env.DB_HOST,
     db_pass: process.env.DB_PASSWORD,
-    db_dialect: process.env.DB_DIALECT || 'mysql'
+    db_dialect: process.env.DB_DIALECT || 'postgres'
 };
 
 module.exports = allEnv;
