@@ -1,5 +1,11 @@
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h> // Adiciona a biblioteca "LiquidCrystal" ao projeto
+#include <DallasTemperature.h> //lib sensor temp
+#define DSl8b20 2
+#include <LiquidCrystal_I2C.h> // lib lcd
+#include <ArduinoJson.h> // lib json
+
+OneWire ourWire(DSl8b20); //pinagem temp
+DallasTemperature sensors(&ourWire);
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); // Pinagem do LCD
 
@@ -15,18 +21,23 @@ unsigned long tempo;        // Float tempo
 void setup()
 {
   Serial.begin(9600);
+  sensors.begin();
   lcd.init();         // initialize the lcd
   lcd.backlight(); 
 
   lcd.setCursor(1, 0);
-  lcd.print("LabTech");
+  inicio();
   delay(3000);
   lcd.clear(); 
 }
 
 void loop() {
+  sensors.requestTemperatures();
   soma_tensao = 0;   // Inicia soma_tensão em 0
   contagem = 0;      // Inicia a contagem em 0
+
+  Serial.print(sensors.getTempCByIndex(0));
+  Serial.println(" °C");
 
   while (contagem < 10) {                   // Executa enquanto contagem menor que 10
     tempo = millis();                       // Define o tempo em microssegundos
@@ -34,56 +45,73 @@ void loop() {
     tensao = (entrada_A0 * 5.0) / 1024.0;   // Converte em tensão, o valor lido
     soma_tensao = (soma_tensao + tensao);   // Soma a tensão anterior com a atual
     contagem++;                             // Soma 1 à variável de contagem
-    delay(100);                             // Aguarda para próxima leitura
+    delay(100);          
   }
 
   media = soma_tensao / 10;                 // Calcula a média das leituras
-
+  float valor_temp = sensors.getTempCByIndex(0); // leitura da temperatura
   float valor_pH = -5.70 * media + valor_calibracao;    // Calcula valor de pH
+  Serial.print(valor_pH);
 
-  lcd.clear();              // Limpa o display
-  lcd.setCursor(2, 0);      // 2 = 2 colunas para a direita. 0 = Primeira linha
-  lcd.print("Valor do pH:"); // Imprime um texto
-
+  lcd.clear();    
+  lcd.setCursor(0, 0);     
+  lcd.print("pH:"); 
+  lcd.setCursor(0, 1);   
+  lcd.print("Temp:"); 
+  
   if (valor_pH < 10)
+    lcd.setCursor(4, 0);
+    lcd.print(valor_pH);
     lcd.setCursor(6, 1);
-  else
-    lcd.setCursor(5, 1);      // 2 = 2 colunas para a direita. 0 = Primeira linha
-  lcd.print(valor_pH); // Imprime um texto
-  Serial.println(valor_pH);
+    lcd.print(valor_temp);
+    lcd.setCursor(10, 1);
+    lcd.print(" C");
 
-  delay(1000);                    // Aguarda para próxima leitura
+  data(valor_pH, valor_temp);
+  delay(1000); 
 }
 
-void inicio ()                // teste de rolagem de mensagem
+void data (float ph, float temperature) {
+  String name;
+  DynamicJsonDocument doc(1024);
+  doc["name"] = "Amostra 1";
+  doc["ph"] = ph;
+  doc["temperature"] = temperature;
+  // Serializa o objeto JSON em uma string
+  String json;
+  serializeJson(doc, json);
+  Serial.print(json); 
+}
+
+void inicio ()  //loading
 {
-  lcd.setCursor(0, 0);           // selecionando coluna 16 e linha 1
-  lcd.print("M"); 
+  lcd.setCursor(0, 0);    
+  lcd.print("L"); 
   delay (200);
-  lcd.print("e"); 
+  lcd.print("a"); 
   delay (200);
-  lcd.print("d"); 
+  lcd.print("b"); 
   delay (200);
-  lcd.print("i"); 
-  delay (200);
-  lcd.print("d"); 
+  lcd.print("I"); 
   delay (200);
   lcd.print("o"); 
   delay (200);
-  lcd.print("r"); 
-  delay (200);
-  lcd.print(" "); 
-  delay (200);
-  lcd.print("d"); 
+  lcd.print("T"); 
   delay (200);
   lcd.print("e"); 
   delay (200);
-  lcd.print(" "); 
+  lcd.print("c"); 
   delay (200);
-  lcd.print("p"); 
+  lcd.print("k"); 
   delay (200);
-  lcd.print("H"); 
+  lcd.print("."); 
   delay (200);
-  lcd.print(":"); 
+  lcd.print("."); 
+  delay (200);
+  lcd.print("."); 
+  delay (200);
+  lcd.print("."); 
+  delay (200);
+  lcd.print("."); 
   delay (200);
 }
