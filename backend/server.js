@@ -21,7 +21,13 @@ const swaggerPlugin = [
             documentationPath: '/docs',
             info: {
                 title: "Api Arduino",
-                version: '1.0.0'
+                version: '1.0.0',
+                description: 'API for analyzing and recording ph and temperature of liquid samples in the laboratory ',
+                termsOfService: 'http://swagger.io/terms/',
+                license: {
+                    name: 'MIT license',
+                    url: 'https://opensource.org/license/mit/'
+                },
             },
             schemes: ['http', 'https']
         }
@@ -33,7 +39,7 @@ const corsPlugin = [
         plugin: HapiCors,
         options: {
             origins: ['*'],
-            methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
             headers: ['Authorization'],
         }
     }

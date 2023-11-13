@@ -11,7 +11,9 @@ const findOneUser = async (id) => {
             where: {
                 id: id
             },
-            
+            include: [{
+                model: Sample,
+            }]
         })
         return user;
     } catch (error) {

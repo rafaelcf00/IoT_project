@@ -14,7 +14,7 @@ const plugin = {
                     tags: ['api'],
                     description: 'find all samples',
                     handler: controller.findAll,
-                }
+                },
             },
             {
                 method: 'GET',
@@ -24,7 +24,7 @@ const plugin = {
                     tags: ['api'],
                     description: 'find one sample',
                     handler: controller.findOne,
-                }
+                },
             },
             {
                 method: 'POST',
