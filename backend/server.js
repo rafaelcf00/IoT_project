@@ -6,6 +6,7 @@ const hapiJWT = require('hapi-auth-jwt2');
 const HapiSwagger = require('hapi-swagger');
 const routes = require('./config/routes.js');
 const config = require('./config/env-config.js');
+const { findUser, login } = require('./api/v1/auth/auth.repository.js');
 
 const server = Hapi.server({
     port: config.port,
@@ -55,16 +56,21 @@ const plugins = [
     }
 ];
 
-const validate = async (decoded, request, h) => {
+const validate = async (decoded, _, h) => {
     return {
         isValid: true, credencials: decoded,
+    }
+}
+const getKey = (decoded) => {
+    return {
+        key: decoded.key
     }
 }
 
 if (config.jwt.enable === 'true') {
     server.register(hapiJWT);
     server.auth.strategy('jwt', 'jwt', {
-        key: config.jwt.secret,
+        key: getKey,
         validate
     });
 }

@@ -1,4 +1,6 @@
 const { server, plugins } = require('./server.js');
+const preResponse = require('./api/middlewares/exception-middleware.js')
+server.ext('onPreResponse', preResponse); 
 
 (async () => {
     await server.register(plugins);

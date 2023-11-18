@@ -1,4 +1,5 @@
 const business = require('./auth-business');
+const Boom = require('@hapi/boom');
 
 const login = async (request, h) => {
     const {email, password} = request.payload;
@@ -6,7 +7,7 @@ const login = async (request, h) => {
         const user = await business.login(email,password)
         return h.response(user).code(200);
     } catch (error) {
-        return h.response(error).code(500);
+        return Boom.badRequest('Invalid user email or password');
     }
 }
 const register = async (request, h) => {
@@ -16,7 +17,7 @@ const register = async (request, h) => {
         const user = await business.register(data);
         return h.response(user).code(201);
     } catch (error) {
-        return h.response(error).code(500);
+        return Boom.badImplementation(error);
     }
 }
 

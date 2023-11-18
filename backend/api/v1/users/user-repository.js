@@ -1,6 +1,7 @@
 const { User, Sample, Sequelize } = require('../../../models/index');
 const Op = Sequelize.Op;
 const bcrypt = require('bcrypt');
+const Boom = require('@hapi/boom');
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
@@ -11,19 +12,25 @@ const findOneUser = async (id) => {
             where: {
                 id: id
             },
+            attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
             include: [{
                 model: Sample,
             }]
-        })
+        });
+        if(!user) Boom.badRequest('User not found');
+
         return user;
     } catch (error) {
-        throw new Error(error);
+        error = Boom.badRequest();
+        throw error;
     }
 };
 
 const findAllUser = async () => {
     try {
-        const data = await User.findAll()
+        const data = await User.findAll({
+            attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt']
+        })
         return data;
     } catch (error) {
         throw new Error(error);

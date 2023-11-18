@@ -1,4 +1,5 @@
 const business = require('./user-business');
+const Boom = require('@hapi/boom');
 
 const findOne = async (request, h) => {
     const { id } = request.params;
@@ -6,7 +7,7 @@ const findOne = async (request, h) => {
         const result = await business.findOne(parseInt(id));
         return h.response(result).code(200);
     } catch (error) {
-        return h.response(error).code(500);
+        return Boom.badRequest('User not found');
     }
 }
 
