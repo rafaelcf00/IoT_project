@@ -30,10 +30,8 @@ Descrição das variáveis de ambiente a serem configuradas no projeto.
 |HOST          |`string`|            |Host de preferência ipv4           |
 |PORT          |`int`   |            |Porta de exposição da app          |
 |JWT_ENABLE    |`string`|true        |Habilita validação JWT             |
-|JWT_SECRET    |`string`|caracteres  |Secret para validação do JWT       |
 |DB_HOST       |`string`|            |Host do banco local ou em nuvem    |
 |DB_USERNAME   |`string`|            |Username do banco                  |
-|DB_PASSWORD   |`string`|            |Password do banco                  |
 |DB_PASSWORD   |`string`|            |Password do banco                  |
 |DB_NAME       |`string`|arduino     |Nome do banco                      |
 |DB_DIALECT    |`string`|postgres    |Dialeto a ser usado pelo sequelize |

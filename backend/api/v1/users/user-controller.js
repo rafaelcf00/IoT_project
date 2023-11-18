@@ -7,7 +7,7 @@ const findOne = async (request, h) => {
         const result = await business.findOne(parseInt(id));
         return h.response(result).code(200);
     } catch (error) {
-        return Boom.badRequest('User not found');
+        return Boom.notFound('User not found');
     }
 }
 
@@ -16,7 +16,8 @@ const findAll = async (_, h) => {
         const result = await business.findAll();
         return h.response(result).code(200);
     } catch (error) {
-        return h.response(error).code(500);
+        error = Boom.notAcceptable();
+        throw error;
     }
 }
 
@@ -26,7 +27,8 @@ const create = async (request, h) => {
         const user = await business.create(data);
         return h.response(user).code(201)
     } catch (error) {
-        return h.response(error).code(500);
+        error = Boom.notAcceptable();
+        throw error;
     }
 }
 const update = async (request, h) => {
@@ -36,7 +38,8 @@ const update = async (request, h) => {
         const user = await business.update(data, id);
         return h.response(user).code(200);
     } catch (error) {
-        return h.response(error).code(500);
+        error = Boom.notFound('User not found');
+        throw error;
     }
 
 }
@@ -46,7 +49,8 @@ const destroy = async (request, h) => {
         const result = await business.destroy(id);
         return h.response(result).code(204)
     } catch (error) {
-        throw new Error(error);
+        error = Boom.notFound('User not found');
+        throw error;
     }
 }
 

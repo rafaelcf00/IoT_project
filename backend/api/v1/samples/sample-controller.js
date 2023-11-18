@@ -1,3 +1,4 @@
+const Boom = require('@hapi/boom');
 const business = require('./sample-business');
 
 const findOne = async (request, h) => {
@@ -6,7 +7,7 @@ const findOne = async (request, h) => {
         const result = await business.findOne(parseInt(id));
         return h.response(result).code(200);
     } catch (error) {
-        return h.response(error).code(500);
+        return Boom.notFound('Sample not found');
     }
 }
 

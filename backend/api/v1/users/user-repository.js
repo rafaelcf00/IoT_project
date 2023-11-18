@@ -17,11 +17,13 @@ const findOneUser = async (id) => {
                 model: Sample,
             }]
         });
-        if(!user) Boom.badRequest('User not found');
+        if(!user && user === null) {
+            return Boom.notFound('User not found')
+        };
 
         return user;
     } catch (error) {
-        error = Boom.badRequest();
+        error = Boom.notImplemented();
         throw error;
     }
 };
@@ -33,7 +35,8 @@ const findAllUser = async () => {
         })
         return data;
     } catch (error) {
-        throw new Error(error);
+        error = Boom.notAcceptable();
+        throw error;
     }
 };
 
@@ -48,7 +51,8 @@ const createUser = async (user) => {
         const data = await User.create(newData);
         return data;
     } catch (error) {
-        throw new Error(error)
+        error = Boom.notAcceptable();
+        throw error;
     }
 }
 
@@ -68,7 +72,8 @@ const updateUser = async (id, user) => {
             return data;
         });
     } catch (error) {
-        throw new Error(error)
+        error = Boom.notAcceptable();
+        throw error;
     }
 }
 
@@ -80,7 +85,8 @@ const deleteUser = async (id) => {
             }
         })
     } catch (error) {
-        throw new Error(error)
+        error = Boom.notAcceptable();
+        throw error;
     }
 }
 
