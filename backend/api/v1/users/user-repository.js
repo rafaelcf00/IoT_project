@@ -64,6 +64,12 @@ const updateUser = async (id, user) => {
         password: hashPassword
     };
     try {
+        const user = await findOneUser(id);
+        if(!user && user === null) {
+            return Boom.notFound('User not found');
+        }
+        console.log(user);
+
         await User.update({ ...newData }, {
             where: {
                 id: id
@@ -79,6 +85,11 @@ const updateUser = async (id, user) => {
 
 const deleteUser = async (id) => {
     try {
+        const user = await findOneUser(id);
+        if(!user && user === null) {
+            return Boom.notFound('User not found')
+        }
+
         await User.destroy({
             where: {
                 id: id

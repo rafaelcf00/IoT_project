@@ -36,9 +36,12 @@ const update = async (request, h) => {
     const { id } = request.params;
     try {
         const user = await business.update(data, id);
+        if(!user) {
+            return Boom.notFound('User not found');
+        }
         return h.response(user).code(200);
     } catch (error) {
-        error = Boom.notFound('User not found');
+        error = Boom.notAcceptable();
         throw error;
     }
 
@@ -47,9 +50,12 @@ const destroy = async (request, h) => {
     const { id } = request.params;
     try {
         const result = await business.destroy(id);
+        if(!result) {
+            return Boom.notFound('User not found');
+        }
         return h.response(result).code(204)
     } catch (error) {
-        error = Boom.notFound('User not found');
+        error = Boom.notAcceptable();
         throw error;
     }
 }
