@@ -1,0 +1,651 @@
+openapi: 3.0.0
+info:
+  title: API arduino
+  description: API for analyzing and recording ph and temperature of liquid samples in the laboratory
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: gabriel.pagnan@fatec.sp.gov.br
+  license:
+    name: MIT license
+    url: 'https://opensource.org/license/mit/'
+  version: 1.0.1
+externalDocs:
+  url: 'http://localhost:3001'
+  description: Additional docs & infos
+servers:
+  - url: 'https://frontend-labiotech.vercel.app/'
+  - url: 'https://devrafaelcesar.grafana.net/d/d6f341be-13ba-49c5-a7bb-d87290427f45/labiotech?refresh=5s'
+tags:
+  - name: user
+    description: Management user operations
+
+paths:
+  /users:
+    post:
+      tags:
+        - "user"
+      summary: Create a new user
+      description: Create a new user in painel admin
+      operationId: user
+      requestBody: 
+        description: Create a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '201':
+          description: User Created
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: Field values.promotion in body is missing
+        '404':
+          description: Page not found
+        '401':
+          description: Unauthorized
+
+    get:
+      tags:
+        - "user"
+      summary: Find all users
+      description: Find all users
+      operationId: user
+      responses:
+        '200':
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/UserResponses'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+        '404':
+          description: Not found
+        '401':
+          description: Unauthorized
+  
+  /users/{id}:
+    get:
+      tags:
+        - "user"
+      summary: Find user 
+      description: Find user by id
+      operationId: user
+      parameters:
+        - in: query
+          name: id
+          description: ID of user
+          example: 99
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Find one user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+        '404':
+          description: User not found
+        '401':
+          description: Unauthorized
+
+    put:
+      tags:
+        - "user"
+      summary: Update user
+      description: Update user by id
+      operationId: user
+      parameters:
+        - in: query
+          name: id
+          example: 99
+          description: ID of user
+          schema:
+            type: string
+      requestBody:
+        description: Create a new sample
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Updated user
+          content:
+              application/json:
+                schema:
+                    $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+        '404':
+          description: User not found
+        '401':
+          description: Unauthorized
+
+    delete:
+      tags:
+        - "user"
+      summary: Delete user
+      description: Delete user by id
+      operationId: user
+      parameters:
+        - in: query
+          name: id
+          example: 99
+          description: ID of user
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted user 
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+        '404':
+          description: User not found
+        '401':
+          description: Unauthorized
+
+  /samples:
+    get:
+      tags:
+        - "sample"
+      summary: Find all samples
+      description: Find all samples
+      operationId: sample
+      responses:
+        '200':
+            description: Find sample
+            content:
+              application/json:
+                schema:
+                    $ref: '#/components/schemas/SampleResponses'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+        '404':
+          description: User not found
+        '401':
+          description: Unauthorized
+
+  /samples/{userId}:
+    post:
+      tags:
+        - "sample"
+      summary: Create a new sample
+      description: Create a new sample
+      operationId: sample
+      parameters:
+        - in: query
+          name: id
+          description: ID of user
+          example: 99
+          schema:
+            type: string
+      requestBody:
+        description: Create a new sample
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sample'
+        required: true
+      responses:
+        '201':
+          description: Created sample
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: Field values.promotion in body is missing
+        '404':
+          description: Page not found
+        '401':
+          description: Unauthorized
+
+    get:
+      tags:
+        - "sample"
+      summary: Find sample
+      description: Find sample by id
+      operationId: sample
+      responses:
+        '200':
+          description: Find sample
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/SampleResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+        '404':
+          description: User not found
+        '401':
+          description: Unauthorized
+
+  /auth:
+    post:
+      tags:
+        - "auth"
+      summary: Login for user
+      description: Login for user
+      operationId: auth
+      requestBody:
+        description: Credentials of user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: Field values.promotion in body is missing
+        '404':
+          description: Page not found
+
+  /auth/register:
+    post:
+      tags:
+        - "register"
+      summary: Register user
+      description: Register user
+      operationId: user
+      requestBody:
+        description: Create a user
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Register'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    format: int32
+                    example: 4001
+                  description:
+                    type: string
+                    example: Invalid request
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: Field values.promotion in body is missing
+        '404':
+          description: Page not found
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID of user
+          example: 99
+        name:
+          type: string
+          description: Name of user
+          example: John Doe
+        email:
+          type: string
+          description: E-mail of user
+          uniqueItems: true
+          example: johndoe@email.com
+        password:
+          type: string
+          description: Password od user
+          minimum: 6
+          example: admin1234
+        clientId:
+          type: string
+          format: uuid
+          description: Client id of user
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    UserResponse: 
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID of user
+          example: 99
+        name:
+          type: string
+          description: Name of user
+          example: John Doe
+        email:
+          type: string
+          description: E-mail of user
+          uniqueItems: true
+          example: johndoe@email.com
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        samples: 
+            $ref: '#/components/schemas/SampleResponses'
+    UserResponses: 
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: number
+            description: ID of user
+            example: 99
+          name:
+            type: string
+            description: Name of user
+            example: John Doe
+          email:
+            type: string
+            description: E-mail of user
+            uniqueItems: true
+            example: johndoe@email.com
+          createdAt:
+            type: string
+            format: date-time
+          updatedAt:
+            type: string
+            format: date-time
+          samples: 
+            $ref: '#/components/schemas/SampleResponses'
+    
+    Sample:
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID of sample
+          example: 99
+        name:
+          type: string
+          description: Name of sampel
+          example: Sample 1
+        temperature:
+          type: number
+          format: decimal
+          example: 23.00
+          description: Temperature of sample
+        ph:
+          type: number  
+          format: decimal
+          example: 4.50
+          description: pH od sample
+        userId:
+          type: number
+          example: 99
+          description: ID of the user referring to the sample 
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    SampleResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID of sample
+          example: 99
+        name:
+          type: string
+          description: Name of sampel
+          example: Sample 1
+        temperature:
+          type: number
+          format: decimal
+          example: 23.00
+          description: Temperature of sample
+        ph:
+          type: number  
+          format: decimal
+          example: 4.50
+          description: pH od sample
+        userId:
+          type: number
+          example: 99
+          description: ID of the user referring to the sample 
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    SampleResponses:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: number
+            description: ID of sample
+            example: 99
+          name:
+            type: string
+            description: Name of sampel
+            example: Sample 1
+          temperature:
+            type: number
+            format: decimal
+            example: 23.00
+            description: Temperature of sample
+          ph:
+            type: number  
+            format: decimal
+            example: 4.50
+            description: pH od sample
+          userId:
+            type: number
+            example: 99
+            description: ID of the user referring to the sample 
+          createdAt:
+            type: string
+            format: date-time
+          updatedAt:
+            type: string
+            format: date-time
+
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          description: E-mail of user
+          uniqueItems: true
+          example: johndoe@email.com
+        password:
+          type: string
+          description: Password od user
+          minimum: 6
+          example: admin1234
+    LoginResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          type: string
+          format: jwt
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of user
+          example: John Doe
+        email:
+          type: string
+          description: E-mail of user
+          example: johndoe@email.com
+        password:
+          type: string
+          description: Password od user
+          minimum: 6
+          example: admin1234
+    RegisterResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
