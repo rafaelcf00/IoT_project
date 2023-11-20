@@ -4,8 +4,8 @@ const findOne = async (id) => {
     return sampleRepository.findOneSample(id);
 };
 
-const findAll = async () => {
-    return sampleRepository.findAllSample();
+const findAll = async (page, offset) => {
+    return sampleRepository.findAllSample(page, offset);
 };
 
 const create = async (data) => {

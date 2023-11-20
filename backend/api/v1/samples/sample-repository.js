@@ -20,9 +20,14 @@ const findOneSample = async (id) => {
     }
 };
 
-const findAllSample = async () => {
+const findAllSample = async (page, pageSize) => {
+    const offset = (page - 1) * pageSize;
     try {
-        const samples = await Sample.findAll();
+        const samples = await Sample.findAll({
+            limit: pageSize ? pageSize : null,
+            offset: offset ? offset : null,
+            index: 'id'
+        });
         return samples;
     } catch (error) {
         error = Boom.notAcceptable();

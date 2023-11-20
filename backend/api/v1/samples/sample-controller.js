@@ -11,9 +11,10 @@ const findOne = async (request, h) => {
     }
 }
 
-const findAll = async (_, h) => {
+const findAll = async (request, h) => {
+    const {page, offset} = request.query;
     try {
-        const result = await business.findAll();
+        const result = await business.findAll(page, offset);
         return h.response(result).code(200);
     } catch (error) {
         return h.response(error).code(500);
