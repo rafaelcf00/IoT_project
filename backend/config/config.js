@@ -15,7 +15,7 @@ module.exports = {
     dialect: `${dbDialect}`,
     dialectOptions: {
       ssl: {
-        require: true,
+        require: false,
         rejectUnauthorized: false,
       },
     },
@@ -33,5 +33,11 @@ module.exports = {
     database: `${dbName}`,
     host: dbHost,
     dialect: `${dbDialect}`,
-  },
+    dialectOptions: {
+      ssl: {
+        require: false,
+        rejectUnauthorized: false,
+      },
+    },
+  },
 };
