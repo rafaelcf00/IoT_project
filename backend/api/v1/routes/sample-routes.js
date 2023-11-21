@@ -18,6 +18,16 @@ const plugin = {
             },
             {
                 method: 'GET',
+                path: '/samples/date',
+                options: {
+                    auth: 'jwt',
+                    tags: ['api'],
+                    description: 'find all samples',
+                    handler: controller.findDate,
+                },
+            },
+            {
+                method: 'GET',
                 path: '/samples/{id}',
                 options: {
                     auth: 'jwt',

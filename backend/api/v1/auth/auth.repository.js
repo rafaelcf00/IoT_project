@@ -5,8 +5,11 @@ const config = require('../../../config/env-config');
 const tokenGenerator = require('../../../config/token-generation');
 const Boom = require('@hapi/boom');
 
-const register = async (data) => {
-    const hashPassword = bcrypt.hashSync(data.password, salt);
+const saltRounds = 10;
+const salt = bcrypt.genSaltSync(saltRounds);
+
+const register = async (user) => {
+    const hashPassword = bcrypt.hashSync(user.password, salt);
     const newData = {
         name: user.name,
         email: user.email,
@@ -14,11 +17,9 @@ const register = async (data) => {
     };
     try {
         const user = await User.create(newData);
-        if (user) {
-            return user;
-        }
+        return user;
     } catch (error) {
-        error = Boom.badImplementation();
+        error = Boom.notAcceptable();
         throw error;
     }
 };
