@@ -17,7 +17,8 @@ const register = async (request, h) => {
         const user = await business.register(data);
         return h.response(user).code(201);
     } catch (error) {
-        return Boom.badImplementation(error);
+        error = Boom.notAcceptable();
+        throw error;
     }
 }
 

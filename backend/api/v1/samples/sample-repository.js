@@ -45,7 +45,24 @@ const createSample = async (data) => {
     }
 }
 
+const findDate = async (initial, final) => {
+    try {
+        const samples = await Sample.findAll({
+            where: {
+                createdAt: {
+                    [Op.between]: [initial, final]
+                }
+            }
+        });
+        return samples
+    } catch (error) {
+        error = Boom.notAcceptable();
+        throw error;
+    }
+}
+
 module.exports = {
+    findDate,
     createSample,
     findAllSample,
     findOneSample,

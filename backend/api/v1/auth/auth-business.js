@@ -1,7 +1,7 @@
 const authRepository = require('./auth.repository');
 
-const register = async (data) => {
-    return authRepository.register(data);
+const register = async (user) => {
+    return authRepository.register(user);
 };
 
 const login = async (email, password) => {
