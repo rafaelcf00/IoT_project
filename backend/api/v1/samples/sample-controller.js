@@ -12,7 +12,7 @@ const findOne = async (request, h) => {
 }
 
 const findAll = async (request, h) => {
-    const {page, offset} = request.query;
+    const { page, offset } = request.query;
     try {
         const result = await business.findAll(page, offset);
         return h.response(result).code(200);
@@ -36,7 +36,18 @@ const create = async (request, h) => {
     }
 }
 
+const findDate = async (request, h) => {
+    const { initial, final } = request.query;
+    try {
+        const samples = await business.findDate(initial, final);
+        return h.response(samples).code(201)
+    } catch (error) {
+        return h.response(error).code(500)
+    }
+}
+
 module.exports = {
+    findDate,
     findOne,
     findAll,
     create,

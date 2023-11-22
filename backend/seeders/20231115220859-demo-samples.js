@@ -1,9 +1,9 @@
 'use strict';
 const maxCount = 10000;
 const temperatureMin = 24.00;
-const temperatureMax = 42.00;
+const temperatureMax = 31.00;
 const phMin = 2.50;
-const phMax = 8.00;
+const phMax = 3.60;
 let samples = [];
 
 for(let i = 1; i <= maxCount; i++) {
