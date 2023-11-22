@@ -1,54 +1,54 @@
-const Boom = require('@hapi/boom');
-const business = require('./sample-business');
+const Boom = require("@hapi/boom");
+const business = require("./sample-business");
 
 const findOne = async (request, h) => {
-    const { id } = request.params;
-    try {
-        const result = await business.findOne(parseInt(id));
-        return h.response(result).code(200);
-    } catch (error) {
-        return Boom.notFound('Sample not found');
-    }
-}
+  const { id } = request.params;
+  try {
+    const result = await business.findOne(parseInt(id));
+    return h.response(result).code(200);
+  } catch (error) {
+    return Boom.notFound("Sample not found");
+  }
+};
 
 const findAll = async (request, h) => {
-    const { page, offset } = request.query;
-    try {
-        const result = await business.findAll(page, offset);
-        return h.response(result).code(200);
-    } catch (error) {
-        return h.response(error).code(500);
-    }
-}
+  const { page, offset } = request.query;
+  try {
+    const result = await business.findAll(page, offset);
+    return h.response(result).code(200);
+  } catch (error) {
+    return h.response(error).code(500);
+  }
+};
 
 const create = async (request, h) => {
-    const data = request.payload;
-    const { id } = request.params;
-    let sample = {
-        ...data,
-        userId: parseInt(id)
-    }
-    try {
-        const res = await business.create(sample);
-        return h.response(res).code(201)
-    } catch (error) {
-        return h.response(error).code(500)
-    }
-}
+  const data = request.payload;
+  const { id } = request.params;
+  let sample = {
+    ...data,
+    userId: parseInt(id),
+  };
+  try {
+    const res = await business.create(sample);
+    return h.response(res).code(201);
+  } catch (error) {
+    return h.response(error).code(500);
+  }
+};
 
 const findDate = async (request, h) => {
-    const { initial, final } = request.query;
-    try {
-        const samples = await business.findDate(initial, final);
-        return h.response(samples).code(201)
-    } catch (error) {
-        return h.response(error).code(500)
-    }
-}
+  const { page, offset, initial, final } = request.query;
+  try {
+    const samples = await business.findDate(page, offset, initial, final);
+    return h.response(samples).code(201);
+  } catch (error) {
+    return h.response(error).code(500);
+  }
+};
 
 module.exports = {
-    findDate,
-    findOne,
-    findAll,
-    create,
-}
+  findDate,
+  findOne,
+  findAll,
+  create,
+};
